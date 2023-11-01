@@ -1,0 +1,13 @@
+#!/bin/bash
+
+IMAGENAME="ghcr.io/kwkoo/sigterm-watcher"
+BUILDERNAME=multiarch-builder
+
+docker buildx use $BUILDERNAME || docker buildx create --name $BUILDERNAME --use
+
+docker buildx build \
+	  --push \
+	  --platform=linux/amd64,linux/arm64/v8 \
+	  --rm \
+	  -t $IMAGENAME:latest \
+	  .
